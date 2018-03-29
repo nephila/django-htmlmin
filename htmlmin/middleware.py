@@ -5,6 +5,7 @@
 import re
 
 from django.conf import settings
+
 from htmlmin.minify import html_minify
 
 
@@ -67,4 +68,5 @@ class HtmlMinifyMiddleware(object):
             response.content = html_minify(response.content,
                                            ignore_comments=not keep_comments,
                                            parser=parser)
+            response['Content-Length'] = len(response.content)
         return response
